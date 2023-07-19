@@ -1,7 +1,21 @@
 import Button from "react-bootstrap/Button";
 import "./Products.css";
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
-const Products = ({ productsArr }) => {
+const Products = ({ productsArr, handleCartElements }) => {
+  const user = useContext(UserContext);
+
+  const handleCart = (title, imageUrl, price, added) => {
+    handleCartElements(title, imageUrl, price, added);
+
+    if (added === false) {
+      user.setCartCnt((prevCnt) => {
+        return prevCnt + 1;
+      });
+    }
+  };
+
   return (
     <>
       <center style={{ marginTop: "4vh", fontSize: "2rem", margin: "auto" }}>
@@ -23,7 +37,19 @@ const Products = ({ productsArr }) => {
                 <div style={{ fontSize: "1rem", marginTop: "1.6rem" }}>
                   ${item.price}
                 </div>
-                <Button variant="primary">ADD TO CART</Button>{" "}
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    handleCart(
+                      item.title,
+                      item.imageUrl,
+                      item.price,
+                      item.added
+                    );
+                  }}
+                >
+                  ADD TO CART
+                </Button>{" "}
               </div>
             </>
           );

@@ -1,10 +1,11 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../App";
 
 const Nav = ({ handleShowCart }) => {
-  const [cartCnt, setCartCnt] = useState(0);
+  const user = useContext(UserContext);
 
   const handleCartShow = () => {
     handleShowCart();
@@ -30,7 +31,7 @@ const Nav = ({ handleShowCart }) => {
             <span
               style={{ color: "magenta", marginLeft: "5px", fontSize: "22px" }}
             >
-              {cartCnt}
+              {user.cartCnt}
             </span>
           </div>
         </Container>
