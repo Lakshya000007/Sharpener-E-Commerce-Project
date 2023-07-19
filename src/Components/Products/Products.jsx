@@ -4,7 +4,7 @@ import "./Products.css";
 const Products = ({ productsArr }) => {
   return (
     <>
-      <center style={{ marginTop: "4vh", fontSize: "2rem" }}>
+      <center style={{ marginTop: "4vh", fontSize: "2rem", margin: "auto" }}>
         <b>PRODUCTS</b>
         {productsArr.map((item) => {
           return (
@@ -19,7 +19,7 @@ const Products = ({ productsArr }) => {
                 <b>{item.title}</b>
               </div>
               <img src={item.imageUrl} alt="" />
-              <div className="cart">
+              <div>
                 <div style={{ fontSize: "1rem", marginTop: "1.6rem" }}>
                   ${item.price}
                 </div>

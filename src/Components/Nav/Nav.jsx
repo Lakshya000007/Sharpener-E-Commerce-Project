@@ -3,8 +3,12 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 
-const Nav = () => {
+const Nav = ({ handleShowCart }) => {
   const [cartCnt, setCartCnt] = useState(0);
+
+  const handleCartShow = () => {
+    handleShowCart();
+  };
   return (
     <>
       <Navbar className="bg-body-tertiary" data-bs-theme="dark" sticky="top">
@@ -20,7 +24,9 @@ const Nav = () => {
             <Navbar.Toggle />
           </div>
           <div>
-            <Button variant="primary">Cart</Button>
+            <Button variant="primary" onClick={handleCartShow}>
+              Cart
+            </Button>
             <span
               style={{ color: "magenta", marginLeft: "5px", fontSize: "22px" }}
             >

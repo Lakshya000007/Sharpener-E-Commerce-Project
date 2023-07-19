@@ -3,8 +3,20 @@ import Products from "./Components/Products/Products";
 import Nav from "./Components/Nav/Nav";
 import { Button } from "react-bootstrap";
 import Footer from "./Components/Footer/Footer";
+import Cart from "./Components/Cart/Cart";
+import { useState } from "react";
 
 function App() {
+  const [showCart, setShowCart] = useState(false);
+
+  const handleShowCart = () => {
+    setShowCart(true);
+  };
+
+  const removeShowCart = () => {
+    setShowCart(false);
+  };
+
   const productsArr = [
     {
       title: "Colors",
@@ -37,7 +49,7 @@ function App() {
 
   return (
     <>
-      <Nav />
+      <Nav handleShowCart={handleShowCart} />
       <div
         style={{ marginTop: ".25vh", height: "25vh", backgroundColor: "grey" }}
       >
@@ -48,6 +60,9 @@ function App() {
       <Products productsArr={productsArr} />
       <center style={{ marginTop: "2rem" }}>
         <Button
+          onClick={() => {
+            setShowCart(true);
+          }}
           variant="secondary"
           style={{ color: "cyan", marginBottom: "1rem" }}
         >
@@ -55,6 +70,7 @@ function App() {
         </Button>
       </center>
       <Footer />
+      {showCart && <Cart removeShowCart={removeShowCart} />}
     </>
   );
 }

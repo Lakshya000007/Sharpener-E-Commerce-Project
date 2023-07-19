@@ -1,0 +1,17 @@
+.cart {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  z-index: 2;
+}
+
+.cartListTitle {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cartListData {
+  display: flex;
+  justify-content: space-around;
+}
