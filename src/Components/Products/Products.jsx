@@ -13,6 +13,10 @@ const Products = ({ productsArr, handleCartElements }) => {
       user.setCartCnt((prevCnt) => {
         return prevCnt + 1;
       });
+
+      user.setTotalCost((prevCost) => {
+        return prevCost + price;
+      });
     }
   };
 

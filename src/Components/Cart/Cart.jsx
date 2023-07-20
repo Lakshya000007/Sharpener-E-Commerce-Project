@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
 import "./Cart.css";
 import { Button } from "react-bootstrap";
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
 // const cartElements = [
 //   {
@@ -24,9 +26,43 @@ import { Button } from "react-bootstrap";
 // ];
 
 const Cart = ({ removeShowCart, cartElements }) => {
+  const user = useContext(UserContext);
+
   const removeCartShow = () => {
     removeShowCart();
   };
+
+  const handlePurchase = () => {
+    if (user.cartCnt > 0) {
+      alert("Your Purcahse is Successful !! Thanks for Purchase...");
+      user.setCartElements([]);
+      user.setTotalCost(0);
+      user.setCartCnt(0);
+
+      for (let i = 0; i < user.productsArr.length; i++) {
+        user.productsArr[i].added = false;
+      }
+    } else {
+      alert("Add items to Cart to Purchase..");
+    }
+  };
+
+  const handleRemoveItem = (title, price) => {
+    const updatedCart = cartElements.filter((item) => {
+      return item.title !== title;
+    });
+
+    user.setCartElements(updatedCart);
+    user.setTotalCost((prevCost) => prevCost - price);
+    user.setCartCnt((prevCnt) => prevCnt - 1);
+
+    for (let i = 0; i < user.productsArr.length; i++) {
+      if (user.productsArr[i].title === title) {
+        user.productsArr[i].added = false;
+      }
+    }
+  };
+
   return (
     <>
       {ReactDOM.createPortal(
@@ -84,7 +120,14 @@ const Cart = ({ removeShowCart, cartElements }) => {
                   >
                     {item.quantity}
                   </span>
-                  <Button style={{ maxHeight: "40px" }}>Remove</Button>
+                  <Button
+                    style={{ maxHeight: "40px" }}
+                    onClick={() => {
+                      handleRemoveItem(item.title, item.price);
+                    }}
+                  >
+                    Remove
+                  </Button>
                 </div>
                 <hr />
               </>
@@ -92,12 +135,12 @@ const Cart = ({ removeShowCart, cartElements }) => {
           })}
 
           <div>
-            <b style={{ marginLeft: "70%", fontSize: "1.3rem" }}>Total </b>--
-            $12.99
+            <b style={{ marginLeft: "70%", fontSize: "1.3rem" }}>Total </b>-- $
+            {user.totalCost}
           </div>
 
           <center style={{ marginTop: "1.5rem" }}>
-            <Button>PURCHASE</Button>
+            <Button onClick={handlePurchase}>PURCHASE</Button>
           </center>
         </div>,
         document.getElementById("overlay")

@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import Footer from "./Components/Footer/Footer";
 import Cart from "./Components/Cart/Cart";
 import { createContext, useState } from "react";
+import About from "./Components/About/About";
 
 export const UserContext = createContext();
 
@@ -41,6 +42,9 @@ const productsArr = [
 function App() {
   const [showCart, setShowCart] = useState(false);
   const [cartCnt, setCartCnt] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
+  const [about] = useState(false);
+  const [cartElements, setCartElements] = useState([]);
 
   const handleShowCart = () => {
     setShowCart(true);
@@ -49,8 +53,6 @@ function App() {
   const removeShowCart = () => {
     setShowCart(false);
   };
-
-  const [cartElements, setCartElements] = useState([]);
 
   const handleCartElements = (title, imageUrl, price, added) => {
     if (added === false) {
@@ -64,15 +66,28 @@ function App() {
           productsArr[i].added = true;
         }
       }
+
+      setTimeout(() => {
+        alert("Item Added to Cart Successfully!!!");
+      }, 300);
     } else {
       alert("Item Already Added!");
     }
   };
 
+  // return <RouterProvider router={router} />;
+
   return (
     <>
       <UserContext.Provider
-        value={{ cartCnt: cartCnt, setCartCnt: setCartCnt }}
+        value={{
+          cartCnt: cartCnt,
+          setCartCnt: setCartCnt,
+          totalCost: totalCost,
+          setTotalCost: setTotalCost,
+          setCartElements: setCartElements,
+          productsArr: productsArr,
+        }}
       >
         <Nav handleShowCart={handleShowCart} />
         <div
@@ -105,6 +120,7 @@ function App() {
         {showCart && (
           <Cart removeShowCart={removeShowCart} cartElements={cartElements} />
         )}
+        {about && <About />}
       </UserContext.Provider>
     </>
   );
